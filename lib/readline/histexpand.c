@@ -141,7 +141,8 @@ get_history_event (string, caller_index, delimiting_quote)
 
   /* The event can be specified in a number of ways.
 
-     !!   the previous command
+     !!   the previous command (may be chained, i.e.
+          !!! is the previous but one command)
      !n   command line N
      !-n  current command-line minus N
      !str the most recent command starting with STR
@@ -164,11 +165,15 @@ get_history_event (string, caller_index, delimiting_quote)
 #define RETURN_ENTRY(e, w) \
 	return ((e = history_get (w)) ? e->line : (char *)NULL)
 
-  /* Handle !! case. */
+  /* Handle !!... case. */
   if (string[i] == history_expansion_char)
     {
-      i++;
-      which = history_base + (history_length - 1);
+      which = history_base + history_length;
+      while(string[i] == history_expansion_char)
+        {
+          i++;
+          which--;
+        }
       *caller_index = i;
       RETURN_ENTRY (entry, which);
     }
