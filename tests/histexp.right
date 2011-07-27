@@ -127,3 +127,10 @@ echo '!!' \!\!
 ok 1
 ok 2
 ok 3
+a
+b
+c
+echo a
+a
+echo c
+c

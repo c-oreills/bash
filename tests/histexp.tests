@@ -122,3 +122,10 @@ echo ${!var2}
 # Bash-2.01[.1] fails this test -- it attempts history expansion after the
 # history_expansion_char
 echo ok 3 # !1200
+
+# Test chaining of !! history expansions
+echo a
+echo b
+echo c
+!!!!
+!!!
